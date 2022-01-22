@@ -47,7 +47,7 @@ params:
 
   label:  
     text: "Главная"
-    icon: /blogging.png
+    icon: /pavelkozlov/blogging.png
     iconHeight: 35
 
   # home-info mode
