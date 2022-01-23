@@ -6,7 +6,16 @@
     <description>Recent content in leetcode on personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ru-ru</language>
-    <lastBuildDate>Sat, 22 Jan 2022 11:55:42 +0300</lastBuildDate><atom:link href="https://pavelkozlov.github.io/pavelkozlov/tags/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Jan 2022 21:42:00 +0300</lastBuildDate><atom:link href="https://pavelkozlov.github.io/pavelkozlov/tags/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Задачи с Leetcode #2. Квадраты отсортированного массива</title>
+      <link>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode2/</link>
+      <pubDate>Sat, 22 Jan 2022 21:42:00 +0300</pubDate>
+      
+      <guid>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode2/</guid>
+      <description>Задачка на сортировку квадратов</description>
+    </item>
+    
     <item>
       <title>Задачи с Leetcode #1. Бинарный поиск</title>
       <link>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode1/</link>
@@ -14,15 +23,6 @@
       
       <guid>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode1/</guid>
       <description>Несколько примеров бинарного поиска на Golang</description>
-    </item>
-    
-    <item>
-      <title>Задачи с Leetcode #2. Квадраты отсортированного массива</title>
-      <link>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode2/</link>
-      <pubDate>Sat, 22 Jan 2022 11:55:42 +0300</pubDate>
-      
-      <guid>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode2/</guid>
-      <description>Задачка на сортировку квадратов</description>
     </item>
     
   </channel>

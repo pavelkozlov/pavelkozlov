@@ -6,11 +6,11 @@
     <description>Recent content in сортировка on personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ru-ru</language>
-    <lastBuildDate>Sat, 22 Jan 2022 11:55:42 +0300</lastBuildDate><atom:link href="https://pavelkozlov.github.io/pavelkozlov/tags/%D1%81%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Jan 2022 21:42:00 +0300</lastBuildDate><atom:link href="https://pavelkozlov.github.io/pavelkozlov/tags/%D1%81%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Задачи с Leetcode #2. Квадраты отсортированного массива</title>
       <link>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode2/</link>
-      <pubDate>Sat, 22 Jan 2022 11:55:42 +0300</pubDate>
+      <pubDate>Sat, 22 Jan 2022 21:42:00 +0300</pubDate>
       
       <guid>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode2/</guid>
       <description>Задачка на сортировку квадратов</description>
