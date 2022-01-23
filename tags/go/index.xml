@@ -16,5 +16,14 @@
       <description>Несколько примеров бинарного поиска на Golang</description>
     </item>
     
+    <item>
+      <title>Задачи с Leetcode #2. Квадраты отсортированного массива</title>
+      <link>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode2/</link>
+      <pubDate>Sat, 22 Jan 2022 11:55:42 +0300</pubDate>
+      
+      <guid>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode2/</guid>
+      <description>Задачка на сортировку квадратов</description>
+    </item>
+    
   </channel>
 </rss>
