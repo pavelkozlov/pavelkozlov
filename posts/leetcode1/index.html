@@ -1,0 +1,436 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>Задачи с Leetcode #1. Бинарный поиск | personal blog</title>
+<meta name=keywords content="leetcode,алгоритмы,go,поиск">
+<meta name=description content="Несколько примеров бинарного поиска на Golang">
+<meta name=author content="Pavel Kozlov">
+<link rel=canonical href=https://pavelkozlov.github.io/pavelkozlov/>
+<link crossorigin=anonymous href=/pavelkozlov/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css integrity="sha256-yIlj/i15RiAA/Q+xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as=style>
+<link rel=preload href=/pavelkozlov/blogging.png as=image>
+<script defer crossorigin=anonymous src=/pavelkozlov/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5+kdJvBz5iKbt6B5PJI=" onload=hljs.initHighlightingOnLoad()></script>
+<link rel=icon href=https://pavelkozlov.github.io/pavelkozlov/%3Clink%20/%20abs%20url%3E>
+<link rel=icon type=image/png sizes=16x16 href=https://pavelkozlov.github.io/pavelkozlov/%3Clink%20/%20abs%20url%3E>
+<link rel=icon type=image/png sizes=32x32 href=https://pavelkozlov.github.io/pavelkozlov/%3Clink%20/%20abs%20url%3E>
+<link rel=apple-touch-icon href=https://pavelkozlov.github.io/pavelkozlov/%3Clink%20/%20abs%20url%3E>
+<link rel=mask-icon href=https://pavelkozlov.github.io/pavelkozlov/%3Clink%20/%20abs%20url%3E>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<meta name=generator content="Hugo 0.92.0">
+<noscript>
+<style>#theme-toggle,.top-link{display:none}</style>
+</noscript><meta property="og:title" content="Задачи с Leetcode #1. Бинарный поиск">
+<meta property="og:description" content="Несколько примеров бинарного поиска на Golang">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pavelkozlov.github.io/pavelkozlov/posts/leetcode1/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-01-22T11:55:42+03:00">
+<meta property="article:modified_time" content="2022-01-22T11:55:42+03:00"><meta property="og:site_name" content="ExampleSite">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Задачи с Leetcode #1. Бинарный поиск">
+<meta name=twitter:description content="Несколько примеров бинарного поиска на Golang">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"https://pavelkozlov.github.io/pavelkozlov/posts/"},{"@type":"ListItem","position":3,"name":"Задачи с Leetcode #1. Бинарный поиск","item":"https://pavelkozlov.github.io/pavelkozlov/posts/leetcode1/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Задачи с Leetcode #1. Бинарный поиск","name":"Задачи с Leetcode #1. Бинарный поиск","description":"Несколько примеров бинарного поиска на Golang","keywords":["leetcode","алгоритмы","go","поиск"],"articleBody":"Бинарный поиск Определение  Двоичный (бинарный) поиск (также известен как метод деления пополам или дихотомия) — классический алгоритм поиска элемента в отсортированном массиве, использующий дробление массива на половины.\n Источник Wikipedia\nАлгоритм  Определение значения элемента в середине списка. Полученное значение сравнивается с ключом. Если ключ меньше значения середины, то поиск осуществляется в первой (левой) половине элементов, иначе — во второй (правой). Поиск сводится к тому, что вновь определяется значение серединного элемента в выбранной половине и сравнивается с ключом. Процесс продолжается до тех пор, пока не будет найден элемент со значением ключа или не станет пустым интервал для поиска.  Пример  Предположим, что у нас есть отсортированный список целых чисел: 1,2,5,7,8,11,13,17,19,40,55 Задача состоит в том, что бы найти число 17 Можно использовать линейный перебор: мы знаем что в списке 11 элементов, и по очереди обращаемся к каждому, сравнивая с искомым элементом. Является ли элемент с индексом 0 17? Нет. А с индексом 1? Нет. И т.д. В таком варианте решения, для массива из 11 элементов потребуется 11 сравнений. А для массива из 1000 элементов - 1000 сравнений. Поэтому такой алгоритм имеет сложность O(n) Алгоритм бинарного поиска: мы берем средний элемент из области поиска [1,2,5,7,8,11,13,17,19,40,55] - 11. Делаем сравнение. Это число меньше 17, значит область нашего поиска сужается до [13,17,19,40,55]. Мы фактически отбрасываем левую часть. Заново находим среднее число - 19. Оно больше 17. Поэтому отбрасываем правую часть. Теперь область поиска сужается до [13,17]. Находим среднее значение (в данном примере количество элементов четное, поэтому округляем в меньшую сторону) - 13. Это значение меньше 17. Поэтому отбрасываем левую часть. Область поиска сужается до [17], т.е. мы нашли искомое значение. И при этом нам потребовалось 4 сравнения (с 11,19,13,17). Такой алгоритм имеет сложность O(log2(n))  Сравнение На маленьких объемах данных разница не так сильно видна. Попробуем большие данные\n   Количество элементов Бинарный поиск (количество сравнений) Линейный поиск (количество сравнений)     2 2 2   16 5 16   1024 11 1024   1 048 576 21 1 048 576    Мы видим что для 1 миллиона элементов, линейный поиск выполнит миллион сравнений, в то время как бинарный всего 21 сравнение\nЗадача 1 Описание Дан массив целых чисел nums, отсортированных по возрастанию, и целое число target, необходимо написать функцию для поиска target в nums. Если target существует, надо вернуть его индекс. В противном случае вернуть -1. Вы должны написать алгоритм со сложностью O(log n).\nПримеры    Nums Target Output Описание     -1,0,3,5,9,12 9 4 9 есть в nums, и индекс у него 4   -1,0,3,5,9,12 2 -1 2 отсутствует в nums, поэтому будет возвращено -1    Входные данные  Длина nums 1 - 104 Элементы nums в диапазоне от -104 до 104 Все числа в массиве уникальны и отсортированы по возрастанию  Решение func search(nums []int, target int) int { // Устанавливаем границы поиска \t// На первом этапе это весь массив \tleft := 0 right := len(nums) - 1 // До тех пор, пока поиск не сузится до 1 элемента, выполняем цикл \tfor left  right { // Находим средний элемент списка \tmid := (left + right) / 2 // Если средний элемент равен искомому - возвращаем его индекс \tif nums[mid] == target { return mid } // Если средний элемент меньше искомого значения, сдвигаем левую границу \t// Следующий поиск будет на отрезке от среднего элемента до конца массива \t// Если средний элемент больше искомого, сдвигаем правую границу \t// Тогда следующий поиск будет от начала массива до середины \tif nums[mid] target { left = mid + 1 } else if nums[mid]  target { right = mid - 1 } } // Если не найден искомый элемент при сужении области поиска до 1 элемента, вернется -1 \treturn -1 } Задача 2 Описание Вы менеджер продукта и в настоящее время возглавляете команду по разработке. К сожалению, последняя версия вашего продукта не прошла проверку качества. Поскольку каждая версия разрабатывается на основе предыдущей версии, все версии после первой плохой версии тоже плохие.\nПредположим, у вас есть n версий [1, 2, …, n] и вы хотите найти плохую версию, из-за которой все последующие плохие.\nВам предоставляется API isBadVersion, которое возвращает, является ли версия плохой. Реализуйте функцию для поиска первой плохой версии. Вы должны свести к минимуму количество обращений к API.\nПримеры    Текущая версия Первая плохая версия Результат работы Описание     5 4 4 Вызов isBadVersion(3) вернул false, вызов isBadVersion(5) вернул true, вызов isBadVersion(4) вернул true. 4 - первая плохая версия   1 1 1 Вызов isBadVersion(1) вернул true    Входные данные  Плохая версия всегда меньше или равна текущей Текущая версия находится в диапазоне от 1 до 230 включительно  Решение func firstBadVersion(n int) int { // Устанавливаем границы поиска  // На первом этапе это весь массив \tleft := 0 right := n - 1 // До тех пор, пока поиск не сузится до 1 элемента, выполняем цикл \tfor left  right { // Находим средний элемент списка \tmid := left + (right-left)/2 // Если средний элемент является плохой версией, сдвигаем правую границу  // Следующий поиск будет от начала массива до середины \t// Потому что нам нужна первая плохая версия \t// Если средний элемент не плохая версия - двигаем левую границу  // Следующий поиск будет на отрезке от среднего элемента до конца массива \t// Потому что в левой части нет плохих версий \tif isBadVersion(mid) { right = mid - 1 } else { left = mid + 1 } } // Когда поиск сузился до 1 элемента, возвращаем левую границу, т.е. первую плохую версию \treturn left } Задача 3 Описание Дан отсортированный массив уникальных целых чисел и целевое значение. Необходимо вернуть индекс целевого значение, если оно найдено. Если нет, необходимо вернуть индекс, где целевое значение должно было бы находиться в данном массиве.\nАлгоритм должен иметь алгоритмическую сложность O(log n).\nПримеры    Массив Целевое значение Результат выполнения Описание     1,3,5,6 5 2 5 имеет индекс 2   1,3,5,6 2 1 2 нет в массиве, но правильный индекс для нее это 1, между 1 и 3   1,3,5,6 7 4 7 нет в массиве, но правильный индекс для нее это 4, после 6    Входные данные  Длинна массива с числами от 1 до 104 Элементы массива находятся в диапазоне от -104 до 104 Массив содержит уникальные целые числа, отсортированные по возрастанию Целевое значение находится в диапазоне от -104 до 104  Решение Комментировать данный код нет смысла, выполняется бинарный поиск из примера 1. В примере 1 если не было успешного результата поиска, возвращалось значение -1. В данном примере если найдено целевое значение - вернется его индекс. Если значение не найдено, вернется левая граница поиска (как в примере 2) - индекс под которым это значение находилось бы в массиве.\nfunc searchInsert(nums []int, target int) int { left := 0 right := len(nums) - 1 for left  right { mid := (left + right) / 2 if nums[mid] == target { return mid } if nums[mid] target { left = mid + 1 } else { right = mid - 1 } } return left } Дополнительно Переполнение при left + right В примере 1 и 3 формула для получения среднего элемента: mid := (left + right) / 2.\nВ примере 2 формула немного другая: mid := left + (right-left)/2\nМатематически эти формулы равны и разницы между ними нет. Но есть некоторые ограничения в языках программирования. Например, в Java, C++, C# может получиться переполнение int если left + right будет больше 2147483647\nРекурсивный метод Ранее в примерах был рассмотрен итеративный подход в бинарном поиске. Функцию бинарного поиска можно так же реализовать рекурсивным подходом. Для задачи 1 такой подход не подошел, потому что он не хранит индекс элемента. Новая функция вернет 0 если элемент есть в списке и -1 если нет.\nfunc search(nums []int, target int) int { // Берем границы и средний элемент  left, right := 0, len(nums)-1 mid := left + (right-left)/2 // Если средний элемент - искомый, вернем его индекс \tif nums[mid] == target { return mid } // Если средний элемент меньше искомого, отбрасываем левую часть. Если больше - правую \tif nums[mid] target { left = mid + 1 } else { right = mid - 1 } // Если интервал поиска не сузился до 0, опять вызываем функцию search, \t// но передаем новый интервал поиска (уменьшенный вдвое) \tif left  right { return search(nums[left:right+1], target) } // Возвращаем -1 если интервал поиска сузился до 0, и при этом ничего не нашли \treturn -1 } ","wordCount":"1352","inLanguage":"en","datePublished":"2022-01-22T11:55:42+03:00","dateModified":"2022-01-22T11:55:42+03:00","author":[{"@type":"Person","name":"Pavel Kozlov"}],"mainEntityOfPage":{"@type":"WebPage","@id":"https://pavelkozlov.github.io/pavelkozlov/posts/leetcode1/"},"publisher":{"@type":"Organization","name":"personal blog","logo":{"@type":"ImageObject","url":"https://pavelkozlov.github.io/pavelkozlov/%3Clink%20/%20abs%20url%3E"}}}</script>
+</head>
+<body class=dark id=top>
+<script>localStorage.getItem("pref-theme")==="light"&&document.body.classList.remove('dark')</script>
+<header class=header>
+<nav class=nav>
+<div class=logo>
+<a href=https://pavelkozlov.github.io/pavelkozlov accesskey=h title="Главная (Alt + H)">
+<img src=https://pavelkozlov.github.io/pavelkozlov/blogging.png alt=logo aria-label=logo height=35>Главная</a>
+<span class=logo-switches>
+<button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+</span>
+</div>
+<ul id=menu>
+<li>
+<a href=https://pavelkozlov.github.io/pavelkozlov/categories/ title=Категории>
+<span>Категории</span>
+</a>
+</li>
+<li>
+<a href=https://pavelkozlov.github.io/pavelkozlov/tags/ title=Теги>
+<span>Теги</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<h1 class=post-title>
+Задачи с Leetcode #1. Бинарный поиск
+</h1>
+<div class=post-description>
+Несколько примеров бинарного поиска на Golang
+</div>
+<div class=post-meta><span title="2022-01-22 11:55:42 +0300 +0300">January 22, 2022</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;Pavel Kozlov
+</div>
+</header> <div class=toc>
+<details open>
+<summary accesskey=c title="(Alt + C)">
+<span class=details>Table of Contents</span>
+</summary>
+<div class=inner><ul>
+<li>
+<a href=#%d0%b1%d0%b8%d0%bd%d0%b0%d1%80%d0%bd%d1%8b%d0%b9-%d0%bf%d0%be%d0%b8%d1%81%d0%ba aria-label="Бинарный поиск">Бинарный поиск</a><ul>
+<li>
+<a href=#%d0%be%d0%bf%d1%80%d0%b5%d0%b4%d0%b5%d0%bb%d0%b5%d0%bd%d0%b8%d0%b5 aria-label=Определение>Определение</a></li>
+<li>
+<a href=#%d0%b0%d0%bb%d0%b3%d0%be%d1%80%d0%b8%d1%82%d0%bc aria-label=Алгоритм>Алгоритм</a></li>
+<li>
+<a href=#%d0%bf%d1%80%d0%b8%d0%bc%d0%b5%d1%80 aria-label=Пример>Пример</a></li>
+<li>
+<a href=#%d1%81%d1%80%d0%b0%d0%b2%d0%bd%d0%b5%d0%bd%d0%b8%d0%b5 aria-label=Сравнение>Сравнение</a></li></ul>
+</li>
+<li>
+<a href=#%d0%b7%d0%b0%d0%b4%d0%b0%d1%87%d0%b0-1 aria-label="Задача 1">Задача 1</a><ul>
+<li>
+<a href=#%d0%be%d0%bf%d0%b8%d1%81%d0%b0%d0%bd%d0%b8%d0%b5 aria-label=Описание>Описание</a></li>
+<li>
+<a href=#%d0%bf%d1%80%d0%b8%d0%bc%d0%b5%d1%80%d1%8b aria-label=Примеры>Примеры</a></li>
+<li>
+<a href=#%d0%b2%d1%85%d0%be%d0%b4%d0%bd%d1%8b%d0%b5-%d0%b4%d0%b0%d0%bd%d0%bd%d1%8b%d0%b5 aria-label="Входные данные">Входные данные</a></li>
+<li>
+<a href=#%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5 aria-label=Решение>Решение</a></li></ul>
+</li>
+<li>
+<a href=#%d0%b7%d0%b0%d0%b4%d0%b0%d1%87%d0%b0-2 aria-label="Задача 2">Задача 2</a><ul>
+<li>
+<a href=#%d0%be%d0%bf%d0%b8%d1%81%d0%b0%d0%bd%d0%b8%d0%b5-1 aria-label=Описание>Описание</a></li>
+<li>
+<a href=#%d0%bf%d1%80%d0%b8%d0%bc%d0%b5%d1%80%d1%8b-1 aria-label=Примеры>Примеры</a></li>
+<li>
+<a href=#%d0%b2%d1%85%d0%be%d0%b4%d0%bd%d1%8b%d0%b5-%d0%b4%d0%b0%d0%bd%d0%bd%d1%8b%d0%b5-1 aria-label="Входные данные">Входные данные</a></li>
+<li>
+<a href=#%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5-1 aria-label=Решение>Решение</a></li></ul>
+</li>
+<li>
+<a href=#%d0%b7%d0%b0%d0%b4%d0%b0%d1%87%d0%b0-3 aria-label="Задача 3">Задача 3</a><ul>
+<li>
+<a href=#%d0%be%d0%bf%d0%b8%d1%81%d0%b0%d0%bd%d0%b8%d0%b5-2 aria-label=Описание>Описание</a></li>
+<li>
+<a href=#%d0%bf%d1%80%d0%b8%d0%bc%d0%b5%d1%80%d1%8b-2 aria-label=Примеры>Примеры</a></li>
+<li>
+<a href=#%d0%b2%d1%85%d0%be%d0%b4%d0%bd%d1%8b%d0%b5-%d0%b4%d0%b0%d0%bd%d0%bd%d1%8b%d0%b5-2 aria-label="Входные данные">Входные данные</a></li>
+<li>
+<a href=#%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5-2 aria-label=Решение>Решение</a></li></ul>
+</li>
+<li>
+<a href=#%d0%b4%d0%be%d0%bf%d0%be%d0%bb%d0%bd%d0%b8%d1%82%d0%b5%d0%bb%d1%8c%d0%bd%d0%be aria-label=Дополнительно>Дополнительно</a><ul>
+<li>
+<a href=#%d0%bf%d0%b5%d1%80%d0%b5%d0%bf%d0%be%d0%bb%d0%bd%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d1%80%d0%b8-left--right aria-label="Переполнение при left + right">Переполнение при left + right</a></li>
+<li>
+<a href=#%d1%80%d0%b5%d0%ba%d1%83%d1%80%d1%81%d0%b8%d0%b2%d0%bd%d1%8b%d0%b9-%d0%bc%d0%b5%d1%82%d0%be%d0%b4 aria-label="Рекурсивный метод">Рекурсивный метод</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</details>
+</div>
+<div class=post-content><h1 id=бинарный-поиск>Бинарный поиск<a hidden class=anchor aria-hidden=true href=#бинарный-поиск>#</a></h1>
+<h2 id=определение>Определение<a hidden class=anchor aria-hidden=true href=#определение>#</a></h2>
+<blockquote>
+<p>Двоичный (бинарный) поиск (также известен как метод деления пополам или дихотомия) — классический алгоритм поиска элемента в отсортированном массиве, использующий дробление массива на половины.</p>
+</blockquote>
+<p><em>Источник</em> <a href=https://ru.wikipedia.org/wiki/%D0%94%D0%B2%D0%BE%D0%B8%D1%87%D0%BD%D1%8B%D0%B9_%D0%BF%D0%BE%D0%B8%D1%81%D0%BA>Wikipedia</a></p>
+<h2 id=алгоритм>Алгоритм<a hidden class=anchor aria-hidden=true href=#алгоритм>#</a></h2>
+<ul>
+<li>Определение значения элемента в середине списка. Полученное значение сравнивается с ключом.</li>
+<li>Если ключ меньше значения середины, то поиск осуществляется в первой (левой) половине элементов, иначе — во второй (правой).</li>
+<li>Поиск сводится к тому, что вновь определяется значение серединного элемента в выбранной половине и сравнивается с ключом.</li>
+<li>Процесс продолжается до тех пор, пока не будет найден элемент со значением ключа или не станет пустым интервал для поиска.</li>
+</ul>
+<h2 id=пример>Пример<a hidden class=anchor aria-hidden=true href=#пример>#</a></h2>
+<ul>
+<li>Предположим, что у нас есть отсортированный список целых чисел: <code>1,2,5,7,8,11,13,17,19,40,55</code></li>
+<li>Задача состоит в том, что бы найти число <code>17</code></li>
+<li>Можно использовать линейный перебор: мы знаем что в списке 11 элементов, и по очереди обращаемся к каждому, сравнивая с искомым элементом. Является ли элемент с индексом 0 <code>17</code>? Нет. А с индексом 1? Нет. И т.д. В таком варианте решения, для массива из 11 элементов потребуется <strong>11 сравнений</strong>. А для массива из 1000 элементов - <strong>1000 сравнений</strong>. Поэтому такой алгоритм имеет сложность <code>O(n)</code></li>
+<li>Алгоритм бинарного поиска: мы берем средний элемент из области поиска <code>[1,2,5,7,8,11,13,17,19,40,55]</code> - <code>11</code>. Делаем сравнение. Это число меньше <code>17</code>, значит область нашего поиска сужается до <code>[13,17,19,40,55]</code>. Мы фактически отбрасываем левую часть. Заново находим среднее число - <code>19</code>. Оно больше <code>17</code>. Поэтому отбрасываем правую часть. Теперь область поиска сужается до <code>[13,17]</code>. Находим среднее значение (в данном примере количество элементов четное, поэтому округляем в меньшую сторону) - <code>13</code>. Это значение меньше <code>17</code>. Поэтому отбрасываем левую часть. Область поиска сужается до <code>[17]</code>, т.е. мы нашли искомое значение. И при этом нам потребовалось <strong>4 сравнения</strong> (с <code>11</code>,<code>19</code>,<code>13</code>,<code>17</code>). Такой алгоритм имеет сложность O(log2(n))</li>
+</ul>
+<h2 id=сравнение>Сравнение<a hidden class=anchor aria-hidden=true href=#сравнение>#</a></h2>
+<p>На маленьких объемах данных разница не так сильно видна. Попробуем большие данные</p>
+<table>
+<thead>
+<tr>
+<th>Количество элементов</th>
+<th>Бинарный поиск (количество сравнений)</th>
+<th>Линейный поиск (количество сравнений)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2</strong></td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>5</td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>1024</strong></td>
+<td>11</td>
+<td>1024</td>
+</tr>
+<tr>
+<td><strong>1 048 576</strong></td>
+<td>21</td>
+<td>1 048 576</td>
+</tr>
+</tbody>
+</table>
+<p>Мы видим что для 1 миллиона элементов, линейный поиск выполнит миллион сравнений, в то время как бинарный всего 21 сравнение</p>
+<h1 id=задача-1>Задача 1<a hidden class=anchor aria-hidden=true href=#задача-1>#</a></h1>
+<h2 id=описание>Описание<a hidden class=anchor aria-hidden=true href=#описание>#</a></h2>
+<p>Дан массив целых чисел <code>nums</code>, отсортированных по возрастанию, и целое число <code>target</code>, необходимо написать функцию для поиска <code>target</code> в <code>nums</code>. Если <code>target</code> существует, надо вернуть его индекс. В противном случае вернуть <code>-1</code>. Вы должны написать алгоритм со сложностью <code>O(log n)</code>.</p>
+<h2 id=примеры>Примеры<a hidden class=anchor aria-hidden=true href=#примеры>#</a></h2>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>Nums</th>
+<th style=text-align:center>Target</th>
+<th style=text-align:center>Output</th>
+<th style=text-align:left>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>-1,0,3,5,9,12</td>
+<td style=text-align:center>9</td>
+<td style=text-align:center>4</td>
+<td style=text-align:left><code>9</code> есть в <code>nums</code>, и индекс у него 4</td>
+</tr>
+<tr>
+<td style=text-align:left>-1,0,3,5,9,12</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>-1</td>
+<td style=text-align:left><code>2</code> отсутствует в <code>nums</code>, поэтому будет возвращено <code>-1</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id=входные-данные>Входные данные<a hidden class=anchor aria-hidden=true href=#входные-данные>#</a></h2>
+<ul>
+<li>Длина <code>nums</code> 1 - 104</li>
+<li>Элементы <code>nums</code> в диапазоне от -104 до 104</li>
+<li>Все числа в массиве уникальны и отсортированы по возрастанию</li>
+</ul>
+<h2 id=решение>Решение<a hidden class=anchor aria-hidden=true href=#решение>#</a></h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>search</span>(<span style=color:#a6e22e>nums</span> []<span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>target</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+    <span style=color:#75715e>// Устанавливаем границы поиска
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// На первом этапе это весь массив
+</span><span style=color:#75715e></span>	<span style=color:#a6e22e>left</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+	<span style=color:#a6e22e>right</span> <span style=color:#f92672>:=</span> len(<span style=color:#a6e22e>nums</span>) <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+
+	<span style=color:#75715e>// До тех пор, пока поиск не сузится до 1 элемента, выполняем цикл
+</span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>left</span> <span style=color:#f92672>&lt;=</span> <span style=color:#a6e22e>right</span> {
+		<span style=color:#75715e>// Находим средний элемент списка
+</span><span style=color:#75715e></span>		<span style=color:#a6e22e>mid</span> <span style=color:#f92672>:=</span> (<span style=color:#a6e22e>left</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>right</span>) <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
+		<span style=color:#75715e>// Если средний элемент равен искомому - возвращаем его индекс
+</span><span style=color:#75715e></span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>mid</span>] <span style=color:#f92672>==</span> <span style=color:#a6e22e>target</span> {
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>mid</span>
+		}
+		<span style=color:#75715e>// Если средний элемент меньше искомого значения, сдвигаем левую границу
+</span><span style=color:#75715e></span>		<span style=color:#75715e>// Следующий поиск будет на отрезке от среднего элемента до конца массива
+</span><span style=color:#75715e></span>		<span style=color:#75715e>// Если средний элемент больше искомого, сдвигаем правую границу
+</span><span style=color:#75715e></span>		<span style=color:#75715e>// Тогда следующий поиск будет от начала массива до середины
+</span><span style=color:#75715e></span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>mid</span>] &lt; <span style=color:#a6e22e>target</span> {
+			<span style=color:#a6e22e>left</span> = <span style=color:#a6e22e>mid</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>
+		} <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>mid</span>] &gt; <span style=color:#a6e22e>target</span> {
+			<span style=color:#a6e22e>right</span> = <span style=color:#a6e22e>mid</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+		}
+	}
+	<span style=color:#75715e>// Если не найден искомый элемент при сужении области поиска до 1 элемента, вернется -1
+</span><span style=color:#75715e></span>	<span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>
+}
+</code></pre></div><h1 id=задача-2>Задача 2<a hidden class=anchor aria-hidden=true href=#задача-2>#</a></h1>
+<h2 id=описание-1>Описание<a hidden class=anchor aria-hidden=true href=#описание-1>#</a></h2>
+<p>Вы менеджер продукта и в настоящее время возглавляете команду по разработке. К сожалению, последняя версия вашего продукта не прошла проверку качества. Поскольку каждая версия разрабатывается на основе предыдущей версии, все версии после первой плохой версии тоже плохие.</p>
+<p>Предположим, у вас есть <code>n</code> версий [1, 2, &mldr;, n] и вы хотите найти плохую версию, из-за которой все последующие плохие.</p>
+<p>Вам предоставляется API <code>isBadVersion</code>, которое возвращает, является ли версия плохой. Реализуйте функцию для поиска первой плохой версии. Вы должны свести к минимуму количество обращений к API.</p>
+<h2 id=примеры-1>Примеры<a hidden class=anchor aria-hidden=true href=#примеры-1>#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Текущая версия</th>
+<th>Первая плохая версия</th>
+<th>Результат работы</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>Вызов <code>isBadVersion(3)</code> вернул <code>false</code>, вызов <code>isBadVersion(5)</code> вернул <code>true</code>, вызов <code>isBadVersion(4)</code> вернул <code>true</code>. <code>4</code> - первая плохая версия</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>Вызов <code>isBadVersion(1)</code> вернул <code>true</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id=входные-данные-1>Входные данные<a hidden class=anchor aria-hidden=true href=#входные-данные-1>#</a></h2>
+<ul>
+<li>Плохая версия всегда меньше или равна текущей</li>
+<li>Текущая версия находится в диапазоне от 1 до 230 включительно</li>
+</ul>
+<h2 id=решение-1>Решение<a hidden class=anchor aria-hidden=true href=#решение-1>#</a></h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>firstBadVersion</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+    <span style=color:#75715e>// Устанавливаем границы поиска
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// На первом этапе это весь массив
+</span><span style=color:#75715e></span>	<span style=color:#a6e22e>left</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+	<span style=color:#a6e22e>right</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+
+    <span style=color:#75715e>// До тех пор, пока поиск не сузится до 1 элемента, выполняем цикл
+</span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>left</span> <span style=color:#f92672>&lt;=</span> <span style=color:#a6e22e>right</span> {
+        <span style=color:#75715e>// Находим средний элемент списка
+</span><span style=color:#75715e></span>		<span style=color:#a6e22e>mid</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>left</span> <span style=color:#f92672>+</span> (<span style=color:#a6e22e>right</span><span style=color:#f92672>-</span><span style=color:#a6e22e>left</span>)<span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>
+		<span style=color:#75715e>// Если средний элемент является плохой версией, сдвигаем правую границу
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// Следующий поиск будет от начала массива до середины 
+</span><span style=color:#75715e></span>		<span style=color:#75715e>// Потому что нам нужна первая плохая версия
+</span><span style=color:#75715e></span>		<span style=color:#75715e>// Если средний элемент не плохая версия - двигаем левую границу
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// Следующий поиск будет на отрезке от среднего элемента до конца массива
+</span><span style=color:#75715e></span>		<span style=color:#75715e>// Потому что в левой части нет плохих версий
+</span><span style=color:#75715e></span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>isBadVersion</span>(<span style=color:#a6e22e>mid</span>) {
+			<span style=color:#a6e22e>right</span> = <span style=color:#a6e22e>mid</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+		} <span style=color:#66d9ef>else</span> {
+			<span style=color:#a6e22e>left</span> = <span style=color:#a6e22e>mid</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>
+		}
+	}
+	<span style=color:#75715e>// Когда поиск сузился до 1 элемента, возвращаем левую границу, т.е. первую плохую версию
+</span><span style=color:#75715e></span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>left</span>
+}
+</code></pre></div><h1 id=задача-3>Задача 3<a hidden class=anchor aria-hidden=true href=#задача-3>#</a></h1>
+<h2 id=описание-2>Описание<a hidden class=anchor aria-hidden=true href=#описание-2>#</a></h2>
+<p>Дан отсортированный массив уникальных целых чисел и целевое значение. Необходимо вернуть индекс целевого значение, если оно найдено. Если нет, необходимо вернуть индекс, где целевое значение должно было бы находиться в данном массиве.</p>
+<p>Алгоритм должен иметь алгоритмическую сложность <code>O(log n)</code>.</p>
+<h2 id=примеры-2>Примеры<a hidden class=anchor aria-hidden=true href=#примеры-2>#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Массив</th>
+<th>Целевое значение</th>
+<th>Результат выполнения</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,3,5,6</td>
+<td>5</td>
+<td>2</td>
+<td><code>5</code> имеет индекс 2</td>
+</tr>
+<tr>
+<td>1,3,5,6</td>
+<td>2</td>
+<td>1</td>
+<td><code>2</code> нет в массиве, но правильный индекс для нее это 1, между <code>1</code> и <code>3</code></td>
+</tr>
+<tr>
+<td>1,3,5,6</td>
+<td>7</td>
+<td>4</td>
+<td><code>7</code> нет в массиве, но правильный индекс для нее это 4, после <code>6</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id=входные-данные-2>Входные данные<a hidden class=anchor aria-hidden=true href=#входные-данные-2>#</a></h2>
+<ul>
+<li>Длинна массива с числами от 1 до 104</li>
+<li>Элементы массива находятся в диапазоне от -104 до 104</li>
+<li>Массив содержит уникальные целые числа, отсортированные по возрастанию</li>
+<li>Целевое значение находится в диапазоне от -104 до 104</li>
+</ul>
+<h2 id=решение-2>Решение<a hidden class=anchor aria-hidden=true href=#решение-2>#</a></h2>
+<p>Комментировать данный код нет смысла, выполняется бинарный поиск из <strong>примера 1</strong>. <strong>В примере 1</strong> если не было успешного результата поиска, возвращалось значение <code>-1</code>.
+В данном примере если найдено целевое значение - вернется его индекс. Если значение не найдено, вернется левая граница поиска (как в <strong>примере 2</strong>) - индекс под которым это значение находилось бы в массиве.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>searchInsert</span>(<span style=color:#a6e22e>nums</span> []<span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>target</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+	<span style=color:#a6e22e>left</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+	<span style=color:#a6e22e>right</span> <span style=color:#f92672>:=</span> len(<span style=color:#a6e22e>nums</span>) <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>left</span> <span style=color:#f92672>&lt;=</span> <span style=color:#a6e22e>right</span> {
+		<span style=color:#a6e22e>mid</span> <span style=color:#f92672>:=</span> (<span style=color:#a6e22e>left</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>right</span>) <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
+		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>mid</span>] <span style=color:#f92672>==</span> <span style=color:#a6e22e>target</span> {
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>mid</span>
+		}
+		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>mid</span>] &lt; <span style=color:#a6e22e>target</span> {
+			<span style=color:#a6e22e>left</span> = <span style=color:#a6e22e>mid</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>
+		} <span style=color:#66d9ef>else</span> {
+			<span style=color:#a6e22e>right</span> = <span style=color:#a6e22e>mid</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+		}
+	}
+	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>left</span>
+}
+</code></pre></div><h1 id=дополнительно>Дополнительно<a hidden class=anchor aria-hidden=true href=#дополнительно>#</a></h1>
+<h2 id=переполнение-при-left--right>Переполнение при left + right<a hidden class=anchor aria-hidden=true href=#переполнение-при-left--right>#</a></h2>
+<p>В <strong>примере 1</strong> и <strong>3</strong> формула для получения среднего элемента:
+<code>mid := (left + right) / 2</code>.</p>
+<p>В <strong>примере 2</strong> формула немного другая:
+<code>mid := left + (right-left)/2</code></p>
+<p>Математически эти формулы равны и разницы между ними нет. Но есть некоторые ограничения в языках программирования. Например, в <code>Java</code>, <code>C++</code>, <code>C#</code> может получиться переполнение int если <code>left</code> + <code>right</code> будет больше 2147483647</p>
+<h2 id=рекурсивный-метод>Рекурсивный метод<a hidden class=anchor aria-hidden=true href=#рекурсивный-метод>#</a></h2>
+<p>Ранее в примерах был рассмотрен итеративный подход в бинарном поиске. Функцию бинарного поиска можно так же реализовать рекурсивным подходом. Для <strong>задачи 1</strong> такой подход не подошел, потому что он не хранит индекс элемента. Новая функция вернет <code>0</code> если элемент есть в списке и <code>-1</code> если нет.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>search</span>(<span style=color:#a6e22e>nums</span> []<span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>target</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+	
+	<span style=color:#75715e>// Берем границы и средний элемент
+</span><span style=color:#75715e></span>    <span style=color:#a6e22e>left</span>, <span style=color:#a6e22e>right</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>, len(<span style=color:#a6e22e>nums</span>)<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>
+	<span style=color:#a6e22e>mid</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>left</span> <span style=color:#f92672>+</span> (<span style=color:#a6e22e>right</span><span style=color:#f92672>-</span><span style=color:#a6e22e>left</span>)<span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>
+	
+	<span style=color:#75715e>// Если средний элемент - искомый, вернем его индекс
+</span><span style=color:#75715e></span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>mid</span>] <span style=color:#f92672>==</span> <span style=color:#a6e22e>target</span> {
+		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>mid</span>
+	}
+	<span style=color:#75715e>// Если средний элемент меньше искомого, отбрасываем левую часть. Если больше - правую
+</span><span style=color:#75715e></span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>mid</span>] &lt; <span style=color:#a6e22e>target</span> {
+		<span style=color:#a6e22e>left</span> = <span style=color:#a6e22e>mid</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>
+	} <span style=color:#66d9ef>else</span> {
+		<span style=color:#a6e22e>right</span> = <span style=color:#a6e22e>mid</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+	}
+
+	<span style=color:#75715e>// Если интервал поиска не сузился до 0, опять вызываем функцию search,
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// но передаем новый интервал поиска (уменьшенный вдвое)
+</span><span style=color:#75715e></span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>left</span> <span style=color:#f92672>&lt;=</span> <span style=color:#a6e22e>right</span> {
+		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>search</span>(<span style=color:#a6e22e>nums</span>[<span style=color:#a6e22e>left</span>:<span style=color:#a6e22e>right</span><span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>], <span style=color:#a6e22e>target</span>)
+	}
+
+	<span style=color:#75715e>// Возвращаем -1 если интервал поиска сузился до 0, и при этом ничего не нашли
+</span><span style=color:#75715e></span>	<span style=color:#66d9ef>return</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>
+}
+</code></pre></div>
+</div>
+<footer class=post-footer>
+<ul class=post-tags>
+<li><a href=https://pavelkozlov.github.io/pavelkozlov/tags/leetcode/>leetcode</a></li>
+<li><a href=https://pavelkozlov.github.io/pavelkozlov/tags/%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B/>алгоритмы</a></li>
+<li><a href=https://pavelkozlov.github.io/pavelkozlov/tags/go/>go</a></li>
+<li><a href=https://pavelkozlov.github.io/pavelkozlov/tags/%D0%BF%D0%BE%D0%B8%D1%81%D0%BA/>поиск</a></li>
+</ul>
+</footer>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2022 <a href=https://pavelkozlov.github.io/pavelkozlov>personal blog</a></span>
+<span>
+Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://git.io/hugopapermod rel=noopener target=_blank>PaperMod</a>
+</span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a>
+<script>let menu=document.getElementById('menu');menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+<script>document.querySelectorAll('pre > code').forEach(b=>{const c=b.parentNode.parentNode,a=document.createElement('button');a.classList.add('copy-code'),a.innerText='copy';function d(){a.innerText='copied!',setTimeout(()=>{a.innerText='copy'},2e3)}a.addEventListener('click',e=>{if('clipboard'in navigator){navigator.clipboard.writeText(b.textContent),d();return}const a=document.createRange();a.selectNodeContents(b);const c=window.getSelection();c.removeAllRanges(),c.addRange(a);try{document.execCommand('copy'),d()}catch(a){}c.removeRange(a)}),c.classList.contains("highlight")?c.appendChild(a):c.parentNode.firstChild==c||(b.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?b.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(a):b.parentNode.appendChild(a))})</script>
+</body>
+</html>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on personal blog</title>
-    <link>https://pavelkozlov.github.io/pavelkozlov/posts/</link>
-    <description>Recent content in Posts on personal blog</description>
+    <title>алгоритмы on personal blog</title>
+    <link>https://pavelkozlov.github.io/pavelkozlov/categories/%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B/</link>
+    <description>Recent content in алгоритмы on personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ru-ru</language>
-    <lastBuildDate>Sat, 22 Jan 2022 11:55:42 +0300</lastBuildDate><atom:link href="https://pavelkozlov.github.io/pavelkozlov/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Jan 2022 11:55:42 +0300</lastBuildDate><atom:link href="https://pavelkozlov.github.io/pavelkozlov/categories/%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Задачи с Leetcode #1. Бинарный поиск</title>
       <link>https://pavelkozlov.github.io/pavelkozlov/posts/leetcode1/</link>
