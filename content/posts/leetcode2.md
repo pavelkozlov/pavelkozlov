@@ -1,6 +1,6 @@
 ---
 title: "Задачи с Leetcode #2. Квадраты отсортированного массива"
-date: 2022-01-22T11:55:42+03:00
+date: 2022-01-22T21:42:00+03:00
 tags: ["leetcode", "алгоритмы", "go", "сортировка"]
 categories: ["leetcode", "алгоритмы"]
 author: ["Pavel Kozlov"]
